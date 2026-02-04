@@ -1,0 +1,21 @@
+# Project Chimera: AI Rules of Engagement
+
+## 1. Project Context
+This is **Project Chimera**, an autonomous influencer system built on **Spec-Driven Development** and **MCP**.
+
+## 2. The Prime Directive
+> **NEVER generate code without checking `specs/` first.**
+If a user asks for a feature, verify it exists in `specs/functional.md` or `specs/technical.md`. If not, ask the user to update the spec first.
+
+## 3. Architecture Rules
+- **No Direct API Calls**: All external actions MUST be done via MCP Tools (e.g., `await mcp.call_tool("twitter", "post", ...)`).
+- **FastRender Pattern**: Respect the Planner -> Worker -> Judge separation.
+    - **Planners** do not execute tools.
+    - **Workers** do not plan.
+    - **Judges** do not generate content.
+- **TDD**: Write the failing test BEFORE the implementation.
+
+## 4. Code Style
+- **Type Safety**: Use `pydantic` for all data structures.
+- **Async**: All I/O should be `async`/`await`.
+- **Comments**: Explain "Why", not "What".

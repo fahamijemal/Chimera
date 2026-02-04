@@ -1,0 +1,18 @@
+version: "0.1"
+reviews:
+  high_level:
+    enabled: true
+    labels:
+      - "security"
+      - "architecture"
+  path_instructions:
+    - path: "specs/**"
+      instructions: "Ensure all changes in specs are reflected in the code. Flag any deviation."
+    - path: "tests/**"
+      instructions: "Verify that tests cover the acceptance criteria defined in specs/functional.md."
+    - path: "**/*.py"
+      instructions: |
+        Check for:
+        1. Pydantic usage for data validation.
+        2. No direct API calls (must use MCP).
+        3. Docstrings explaining 'Why' not 'What'.
