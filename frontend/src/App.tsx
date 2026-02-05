@@ -1,4 +1,5 @@
 import ReviewCard from './components/ReviewCard'
+import FleetStatus from './components/FleetStatus'
 
 function App() {
   const mockTasks = [
@@ -24,24 +25,33 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <header className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Chimera HITL Dashboard</h1>
           <p className="mt-2 text-sm text-gray-600">
-            Review pending actions flagged by the Judge Agent.
+            Network Orchestration and Safety Governance Interface.
           </p>
         </header>
 
-        <main className="space-y-6">
-          {mockTasks.map(task => (
-            <ReviewCard
-              key={task.task_id}
-              task_id={task.task_id}
-              generated_content={task.generated_content}
-              confidence_score={task.confidence_score}
-              reasoning_trace={task.reasoning_trace}
-            />
-          ))}
+        <main className="space-y-8">
+          {/* Swarm Status Section */}
+          <FleetStatus />
+
+          {/* HITL Review Section */}
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">Pending Safety Reviews (HITL)</h2>
+            <div className="space-y-6">
+              {mockTasks.map(task => (
+                <ReviewCard
+                  key={task.task_id}
+                  task_id={task.task_id}
+                  generated_content={task.generated_content}
+                  confidence_score={task.confidence_score}
+                  reasoning_trace={task.reasoning_trace}
+                />
+              ))}
+            </div>
+          </div>
         </main>
       </div>
     </div>
