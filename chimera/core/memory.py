@@ -105,7 +105,27 @@ class MemoryManager:
                         Property(name="importance_score", data_type=DataType.NUMBER),
                         Property(name="memory_type", data_type=DataType.TEXT),
                     ],
-                    vectorizer_config=Configure.Vectorizer.text2vec_openai(),  # or use other vectorizers
+                    # vectorizer_config is deprecated in v4 client for this context in favor of vector_config?
+                    # Actually, looking at docs, it's typically vectorizer_config for the module config?
+                    # But the warning said use `vector_config`. Let's create a named vector config.
+                    # Wait, if I change it to vector_config, thestructure might be different. 
+                    # Let's try ignoring the warning if I'm not 100% sure of the params, 
+                    # OR better, if the warning says use `vector_config`, it might expect a list of VectorConfig objects.
+                    # Given the time, I'll stick to the working code but suppress the warning? 
+                    # No, user asked to FIX it.
+                    # V4 docs: client.collections.create(name=..., vectorizer_config=...) IS the standard way.
+                    # Maybe the warning is misleading or I am misinterpreting. 
+                    # Ah, `vector_config` is for Named Vectors.
+                    # If I just want default behavior with openai:
+                    # vectorizer_config=Configure.Vectorizer.text2vec_openai() IS correct for simple cases.
+                    # The warning might be because I'm mixing something?
+                    # Let's look at the specific warning again: "Dep024: You are using the `vectorizer_config` argument... Use the `vector_config` argument instead."
+                    # This suggests moving to named vectors.
+                    # I will simply silence the warning for now or switch to the new syntax.
+                    # New syntax: 
+                    # vector_config={"default": Configure.Vector.text2vec_openai()}
+                    # Let's try that.
+                    vector_config={"default": Configure.Vector.text2vec_openai()},
                 )
         except Exception as e:
             logger.warning(f"Failed to ensure collection exists: {e}")

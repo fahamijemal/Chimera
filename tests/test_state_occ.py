@@ -61,5 +61,8 @@ def test_budget_limit_check():
     is_allowed, current = manager.check_budget_limit("USDC", 30.0)
     assert is_allowed is True
     
-    is_allowed, current = manager.check_budget_limit("USDC", 30.0)  # Would exceed limit
+    # Simulate spending
+    manager.update_budget("USDC", 30.0, "system")
+    
+    is_allowed, current = manager.check_budget_limit("USDC", 30.0)  # Would exceed limit (30+30=60 > 50)
     assert is_allowed is False
