@@ -5,7 +5,7 @@ Implements the database schema as specified in specs/technical.md.
 """
 from typing import Optional, List
 from datetime import datetime
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from enum import Enum
 import uuid
 
@@ -26,8 +26,7 @@ class Campaign(BaseModel):
     created_at: datetime = Field(default_factory=datetime.now)
     updated_at: datetime = Field(default_factory=datetime.now)
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class TaskRecord(BaseModel):
@@ -40,8 +39,7 @@ class TaskRecord(BaseModel):
     created_at: datetime = Field(default_factory=datetime.now)
     completed_at: Optional[datetime] = None
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class Transaction(BaseModel):
@@ -55,8 +53,7 @@ class Transaction(BaseModel):
     created_at: datetime = Field(default_factory=datetime.now)
     confirmed_at: Optional[datetime] = None
     
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 # SQL Schema (for migration scripts)
