@@ -1,17 +1,20 @@
 .PHONY: setup test lint build shell
 
 setup:
-	pip install -e .[dev]
+	@echo "Installing dependencies with uv..."
+	uv pip install -e ".[dev]"
 
 test:
-	pytest tests/ -v
+	@echo "Running tests with uv..."
+	uv run pytest tests/ -v
 
 lint:
-	# Add ruff or flake8 later
-	echo "Linting..."
+	@echo "Linting with uv..."
+	uv run ruff check .
+	uv run black --check .
 
 build:
 	docker build -t chimera-env .
 
 shell:
-	docker run -it -v $(PWD):/app chimera-env /bin/bash
+	uv run bash

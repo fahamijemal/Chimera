@@ -1,18 +1,65 @@
-version: "0.1"
-reviews:
-  high_level:
+# CodeRabbit AI Review Configuration
+# Instructs the AI reviewer to check for Spec Alignment and Security Vulnerabilities
+
+review:
+  # Focus areas for review
+  focus_areas:
+    - "spec_alignment"  # Check if code matches specs/functional.md and specs/technical.md
+    - "security"  # Check for security vulnerabilities
+    - "architecture"  # Verify FastRender Swarm pattern adherence
+    - "mcp_compliance"  # Ensure all external calls use MCP, not direct APIs
+  
+  # Spec alignment checks
+  spec_alignment:
     enabled: true
-    labels:
-      - "security"
-      - "architecture"
-  path_instructions:
-    - path: "specs/**"
-      instructions: "Ensure all changes in specs are reflected in the code. Flag any deviation."
-    - path: "tests/**"
-      instructions: "Verify that tests cover the acceptance criteria defined in specs/functional.md."
-    - path: "**/*.py"
-      instructions: |
-        Check for:
-        1. Pydantic usage for data validation.
-        2. No direct API calls (must use MCP).
-        3. Docstrings explaining 'Why' not 'What'.
+    check_specs:
+      - "specs/functional.md"
+      - "specs/technical.md"
+      - "specs/_meta.md"
+    require_spec_reference: true  # Code should reference spec requirements
+  
+  # Security checks
+  security:
+    enabled: true
+    check_for:
+      - "hardcoded_secrets"
+      - "sql_injection"
+      - "xss_vulnerabilities"
+      - "insecure_api_calls"
+      - "missing_authentication"
+  
+  # Architecture pattern checks
+  architecture:
+    enabled: true
+    patterns:
+      - "FastRender Swarm (Planner -> Worker -> Judge)"
+      - "MCP-only external interactions"
+      - "OCC for state management"
+      - "HITL confidence routing"
+  
+  # MCP compliance
+  mcp_compliance:
+    enabled: true
+    forbidden_patterns:
+      - "requests.get|post|put|delete"  # No direct HTTP calls
+      - "tweepy|instagram|facebook"  # No direct social API calls
+      - "openai.OpenAI|anthropic.Anthropic"  # Should use MCP tools
+    allowed_patterns:
+      - "mcp.client|mcp.server"  # MCP is allowed
+      - "chimera.mcp"  # Our MCP wrappers
+  
+  # Code quality
+  code_quality:
+    enabled: true
+    checks:
+      - "type_hints"
+      - "docstrings"
+      - "error_handling"
+      - "async_await_usage"
+  
+  # Comments for reviewer
+  comments:
+    - "This is Project Chimera - an autonomous influencer system using Spec-Driven Development"
+    - "All external interactions MUST use MCP (Model Context Protocol)"
+    - "Follow the FastRender Swarm pattern: Planner -> Worker -> Judge"
+    - "Check specs/ directory before approving any feature implementation"

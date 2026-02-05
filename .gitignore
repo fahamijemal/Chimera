@@ -42,3 +42,8 @@ htmlcov/
 *.db
 *.sqlite3
 logs/
+
+# Environment
+.env
+.env.local
+.env.*.local
