@@ -37,7 +37,27 @@ class QueueManager:
     
     async def connect(self):
         """Establishes Redis connection."""
-        self._client = await redis.from_url(self.redis_url, decode_responses=True)
+        # Parse URL to handle potential redactions or specific flags if needed
+        # In most cases, redis.from_url handles user:pass@host:port/db correctly
+        # We add SSL context handling if secure connection is implied
+        try:
+            connection_kwargs = {
+                "decode_responses": True,
+                "socket_connect_timeout": 5,
+                "socket_keepalive": True,
+                "health_check_interval": 30
+            }
+            
+            # Check for SSL requirement (rediss:// scheme)
+            if self.redis_url.startswith("rediss://"):
+                 connection_kwargs["ssl_cert_reqs"] = None  # Or use proper cert logic if provided in env
+            
+            self._client = await redis.from_url(self.redis_url, **connection_kwargs)
+        except Exception as e:
+            # Fallback or re-raise with context
+            print(f"Failed to connect to Redis: {e}")
+            self._client = None
+
     
     async def disconnect(self):
         """Closes Redis connection."""

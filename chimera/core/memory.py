@@ -40,13 +40,24 @@ class MemoryManager:
         self.api_key = api_key or os.getenv("WEAVIATE_API_KEY")
         
         # Initialize client (using v4 API)
+        # Initialize client (using v4 API)
         try:
             from weaviate.classes.init import Auth
-            auth = Auth.api_key(self.api_key) if self.api_key else None
-            self.client = weaviate.WeaviateClient(
-                url=self.weaviate_url,
-                auth_credentials=auth
-            )
+            
+            connect_kwargs = {
+                "url": self.weaviate_url,
+            }
+            
+            if self.api_key:
+                connect_kwargs["auth_credentials"] = Auth.api_key(self.api_key)
+                
+            self.client = weaviate.WeaviateClient(**connect_kwargs)
+            self.client.connect() # Explicitly open connection for v4
+            
+            if not self.client.is_live():
+                 logger.warning(f"Weaviate at {self.weaviate_url} is not live.")
+                 self.client = None
+
         except Exception as e:
             logger.warning(f"Failed to initialize Weaviate client: {e}. Using mock mode.")
             self.client = None
