@@ -21,6 +21,11 @@ class TaskStatus(str, Enum):
     COMPLETE = "complete"
     FAILED = "failed"
 
+class Verdict(str, Enum):
+    APPROVE = "APPROVE"
+    REJECT = "REJECT"
+    ESCALATE = "ESCALATE"
+
 class TaskContext(BaseModel):
     goal_description: str
     persona_constraints: List[str] = Field(default_factory=list)
