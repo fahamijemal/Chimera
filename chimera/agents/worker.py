@@ -26,12 +26,12 @@ class WorkerAgent:
             output = {}
             if task.task_type == "generate_content":
                 # Mock call to generate_image
-                output = self.skill_executor.execute_tool("generate_image", {
+                output = await self.skill_executor.execute_tool("generate_image", {
                     "prompt": task.context.goal_description,
                     "character_id": "chimera_v1"
                 })
             elif task.task_type == "social_action":
-                output = self.skill_executor.execute_tool("post_tweet", {
+                output = await self.skill_executor.execute_tool("post_tweet", {
                     "content": task.context.goal_description
                 })
             
@@ -51,3 +51,8 @@ class WorkerAgent:
                 confidence_score=0.0,
                 status="failed"
             )
+        finally:
+            try:
+                await self.skill_executor.cleanup()
+            except Exception:
+                pass
