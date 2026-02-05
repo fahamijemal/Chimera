@@ -13,6 +13,8 @@ dependencies = [
     "python-dotenv",
     "python-frontmatter>=1.0.0",
     "pyyaml>=6.0",
+    "sqlalchemy>=2.0",
+    "asyncpg>=0.29",
 ]
 
 [project.optional-dependencies]

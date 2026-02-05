@@ -60,6 +60,8 @@ class Transaction(BaseModel):
 
 
 # SQL Schema (for migration scripts)
+
+# SQL Schema (for migration scripts)
 POSTGRES_SCHEMA = """
 -- Campaigns Table
 CREATE TABLE IF NOT EXISTS campaigns (
@@ -100,3 +102,88 @@ CREATE INDEX IF NOT EXISTS idx_tasks_status ON tasks(status);
 CREATE INDEX IF NOT EXISTS idx_transactions_wallet ON transactions(wallet_address);
 CREATE INDEX IF NOT EXISTS idx_transactions_tx_hash ON transactions(tx_hash);
 """
+
+# Database Connection Logic
+import os
+import asyncio
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import text
+import logging
+
+logger = logging.getLogger(__name__)
+
+class DatabaseManager:
+    """
+    Manages asynchronous connections to PostgreSQL.
+    """
+    def __init__(self, database_url: Optional[str] = None):
+        """
+        Initialize database manager.
+        
+        Args:
+            database_url: Postgres connection string (defaults to POSTGRES_URL env var)
+        """
+        self.database_url = database_url or os.getenv("POSTGRES_URL")
+        # Ensure we use the async driver
+        if self.database_url and self.database_url.startswith("postgresql://"):
+            self.database_url = self.database_url.replace("postgresql://", "postgresql+asyncpg://")
+            
+        self.engine = None
+        self.session_factory = None
+        
+    async def connect(self):
+        """Creates the async engine and session factory."""
+        if not self.database_url:
+            logger.warning("No database URL configured. Using mock mode.")
+            return
+
+        try:
+            self.engine = create_async_engine(
+                self.database_url,
+                echo=os.getenv("LOG_LEVEL", "INFO").upper() == "DEBUG",
+                future=True,
+                pool_pre_ping=True
+            )
+            self.session_factory = sessionmaker(
+                self.engine, 
+                expire_on_commit=False, 
+                class_=AsyncSession
+            )
+            logger.info("Database connection initialized.")
+        except Exception as e:
+            logger.error(f"Failed to initialize database: {e}")
+            self.engine = None
+
+    async def disconnect(self):
+        """Closes the engine."""
+        if self.engine:
+            await self.engine.dispose()
+            logger.info("Database connection closed.")
+
+    async def init_db(self):
+        """Initialize database schema."""
+        if not self.engine:
+            return
+            
+        async with self.engine.begin() as conn:
+            # Execute raw SQL schema
+            # Note: In production you'd use Alembic. This is for bootstrapping.
+            for statement in POSTGRES_SCHEMA.split(';'):
+                if statement.strip():
+                    await conn.execute(text(statement))
+            logger.info("Database schema initialized.")
+
+    async def get_session(self) -> AsyncSession:
+        """Dependency for getting a DB session."""
+        if not self.session_factory:
+            raise RuntimeError("Database not initialized. Call connect() first.")
+            
+        async with self.session_factory() as session:
+            try:
+                yield session
+            except Exception:
+                await session.rollback()
+                raise
+            finally:
+                await session.close()
