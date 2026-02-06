@@ -62,6 +62,20 @@ class SkillExecutor:
                 "error": str(e)
             }
 
+    async def list_tools(self) -> list:
+        """
+        Lists available tools from the connected MCP server.
+        """
+        if not self._session:
+            await self.initialize()
+            
+        try:
+            # Note: The MCP SDK ClientSession typically exposes list_tools
+            result = await self._session.list_tools()
+            return result.tools
+        except Exception as e:
+            return []
+
     def _validate_tool_call(self, tool_name: str, arguments: Dict[str, Any]):
         """
         Validates arguments against known schemas (Skills Contract).
