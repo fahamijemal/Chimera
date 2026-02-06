@@ -10,7 +10,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install uv
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
+# Install uv via pip (more reliable than ghcr.io in some envs)
+RUN pip install uv
 
 # Copy configuration
 # Copy project files
