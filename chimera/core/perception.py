@@ -173,4 +173,53 @@ def fetch_trends(topic: str) -> List[Dict[str, Any]]:
         }
     ]
     
+    
     return mock_trends
+
+
+class NewsIngester:
+    """
+    Ingests news from MCP resources.
+    
+    Implements connection to 'news://latest' resource.
+    """
+    
+    def __init__(self):
+        self.sources = ["techcrunch", "hackernews", "wired"]
+        
+    def parse_mcp_news_response(self, mcp_response: str) -> List[Dict[str, Any]]:
+        """
+        Parses the raw string response from news://latest into structured data.
+        
+        Args:
+            mcp_response: Newline separated string of headlines
+            
+        Returns:
+            List of news items
+        """
+        items = []
+        lines = mcp_response.strip().split('\n')
+        for line in lines:
+            if not line.startswith("- ["):
+                continue
+                
+            try:
+                # Format: - [SOURCE] Title (Link)
+                parts = line.split("] ", 1)
+                source = parts[0].replace("- [", "")
+                
+                content_parts = parts[1].rsplit(" (", 1)
+                title = content_parts[0]
+                link = content_parts[1].rstrip(")")
+                
+                items.append({
+                    "source": source,
+                    "title": title,
+                    "link": link,
+                    "timestamp": datetime.datetime.now().isoformat()
+                })
+            except Exception as e:
+                logger.warning(f"Failed to parse news line: {line} - {e}")
+                
+        return items
+
