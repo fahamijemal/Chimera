@@ -44,7 +44,6 @@ class MemoryManager:
         
         # Initialize client (using v4 API)
         try:
-            from weaviate.classes.init import Auth
             
             # Simple header/auth setup
             headers = {}

@@ -3,9 +3,7 @@ Tests for Optimistic Concurrency Control (OCC) in GlobalState.
 
 Verifies that state version conflicts are detected and handled correctly.
 """
-import pytest
-from chimera.core.state import StateManager, GlobalState
-from datetime import datetime
+from chimera.core.state import StateManager
 
 
 def test_occ_conflict_detection():

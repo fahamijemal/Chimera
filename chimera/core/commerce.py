@@ -6,7 +6,6 @@ Implements FR 5.0, FR 5.1: Non-Custodial Wallet Management and Autonomous Transa
 from typing import Optional, Dict, Any
 import os
 from datetime import datetime
-from pydantic import BaseModel
 from functools import wraps
 import redis
 import logging

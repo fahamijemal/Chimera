@@ -1,7 +1,7 @@
 
 import pytest
 import os
-from unittest.mock import MagicMock, patch, AsyncMock
+from unittest.mock import patch, AsyncMock
 from chimera.core.commerce import CommerceManager, BudgetExceededError
 
 # Mark as async

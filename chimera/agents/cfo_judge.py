@@ -5,9 +5,9 @@ Implements FR 5.2: Budget Governance (The "CFO" Sub-Agent).
 This judge enforces strict budget limits and anomaly detection for financial transactions.
 """
 from chimera.agents.judge import JudgeAgent, JudgeDecision
-from chimera.core.models import TaskResult, Verdict, TaskType
+from chimera.core.models import TaskResult, Verdict
 from chimera.core.state import StateManager
-from typing import Dict, Any
+from typing import Dict
 import logging
 
 logger = logging.getLogger(__name__)

@@ -4,7 +4,7 @@ GlobalState Management with Optimistic Concurrency Control (OCC).
 This module implements the centralized state management for the Chimera swarm,
 ensuring consistency across Planner, Worker, and Judge agents.
 """
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 from pydantic import BaseModel, Field
 from datetime import datetime
 import hashlib

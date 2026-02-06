@@ -3,16 +3,14 @@ Redis-based Queue Infrastructure for the Chimera Swarm.
 
 Implements TaskQueue (Planner -> Worker) and ReviewQueue (Worker -> Judge).
 """
-from typing import Optional, List
+from typing import Optional
 import json
 try:
     import redis.asyncio as redis
 except ImportError:
     # Fallback for older redis versions
     import redis
-    import asyncio
 from chimera.core.models import Task, TaskResult
-from datetime import datetime
 import os
 
 

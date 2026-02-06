@@ -47,3 +47,6 @@ logs/
 .env
 .env.local
 .env.*.local
+
+# Generated Content
+frontend/public/generated/

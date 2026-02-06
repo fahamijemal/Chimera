@@ -1,7 +1,6 @@
 
 import pytest
 import os
-import asyncio
 from chimera.core.database import DatabaseManager, Campaign, CampaignStatus
 
 # Mark as integration test

@@ -7,7 +7,7 @@ for agents to generate responses.
 import os
 import json
 import logging
-from typing import Optional, Any, Dict, Type
+from typing import Optional, Any, Type
 import google.generativeai as genai
 from pydantic import BaseModel
 from dotenv import load_dotenv

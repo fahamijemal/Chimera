@@ -66,7 +66,7 @@ async def test_fractal_orchestration_scalability():
     success_count = sum(1 for r in results if r.status == "success")
     unique_workers = set(r.worker_id for r in results)
     
-    print(f"\n[Orchestrator] Scalability Report:")
+    print("\n[Orchestrator] Scalability Report:")
     print(f"Total Tasks: {len(tasks)}")
     print(f"Successful: {success_count}")
     print(f"Unique Worker Identities: {len(unique_workers)}")

@@ -2,7 +2,7 @@ from typing import List
 import logging
 import asyncio
 from pydantic import BaseModel
-from chimera.core.models import Task, TaskType, TaskContext, TaskPriority
+from chimera.core.models import Task
 from chimera.core.llm import LLMClient
 
 logger = logging.getLogger(__name__)

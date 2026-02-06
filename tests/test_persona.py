@@ -3,9 +3,7 @@ Tests for SOUL.md Persona System.
 
 Verifies persona loading, validation, and system prompt generation.
 """
-import pytest
-from pathlib import Path
-from chimera.core.persona import AgentPersona, load_persona
+from chimera.core.persona import AgentPersona
 
 
 def test_persona_from_soul_file(tmp_path):
