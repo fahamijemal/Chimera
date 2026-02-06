@@ -3,7 +3,7 @@
 ## 0. Setup (Before Recording)
 - Open VS Code / Cursor.
 - Terminal 1: Run `make test` (Show it passing).
-- Terminal 2: Run `demo_swarm.py` (optional, or just show the code).
+- Terminal 2: Run `python scripts/run_autonomous_loop.py` (optional, or just show the code).
 - Open `specs/technical.md` and `chimera/agents/planner.py`.
 - Ensure **Tenx MCP** is connected (Green light in Cursor/VSCode).
 

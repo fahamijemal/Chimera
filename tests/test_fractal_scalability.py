@@ -52,6 +52,27 @@ async def test_fractal_orchestration_scalability():
             
         worker.skill_executor.execute_tool = mock_execute
         
+        # Override execute_task to avoid LLM & Overhead
+        async def mock_run_task(task):
+             # Simulate reasoning latency
+             await asyncio.sleep(0.05)
+             return await worker.execute_task_logic_only(task) if hasattr(worker, 'execute_task_logic_only') else await mock_execute("mock_tool", {})
+             
+        # Simpler: Just mock the whole execute_task method to return success immediately
+        # The goal is to test Scheduler/Swarm overhead, not LLM/Tool overhead
+        async def mock_full_execution(t):
+            await asyncio.sleep(0.05) # Simulate work
+            from chimera.core.models import TaskResult
+            return TaskResult(
+                task_id=t.task_id,
+                worker_id=worker.worker_id,
+                output={"status": "success"},
+                confidence_score=1.0,
+                status="success"
+            )
+            
+        worker.execute_task = mock_full_execution
+        
         result = await worker.execute_task(task)
         return result
 
