@@ -1,4 +1,5 @@
 import sys
+import os
 from typing import Dict, Any, Optional
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
@@ -23,7 +24,7 @@ class SkillExecutor:
         server_params = StdioServerParameters(
             command=sys.executable,
             args=[self.server_script_path],
-            env=None # Inherit env
+            env=dict(os.environ) # Explicitly pass current env
         )
         
         # Connect via stdio
@@ -55,6 +56,43 @@ class SkillExecutor:
                 "tool": tool_name,
                 "result": result.content[0].text if result.content else "No output"
             }
+        except Exception as e:
+            return {
+                "status": "failed",
+                "error": str(e)
+            }
+
+    async def read_resource(self, uri: str) -> Dict[str, Any]:
+        """
+        Reads a resource from the connected MCP server.
+        """
+        if not self._session:
+            await self.initialize()
+            
+        try:
+            # MCP SDK ClientSession.read_resource returns a ReadResourceResult
+            # which contains a list of contents.
+            result = await self._session.read_resource(uri)
+            
+            # Helper to extract text from the first content item
+            # The structure is usually result.contents[0].text or .blob
+            if result.contents:
+                content = result.contents[0]
+                if hasattr(content, "text"):
+                     text_content = content.text
+                elif hasattr(content, "blob"):
+                     text_content = content.blob # Depending on implementation
+                else:
+                     text_content = str(content)
+                     
+                return {
+                    "status": "success",
+                    "uri": uri,
+                    "content": text_content
+                }
+            else:
+                 return {"status": "success", "uri": uri, "content": ""}
+
         except Exception as e:
             return {
                 "status": "failed",
