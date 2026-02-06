@@ -1,212 +1,88 @@
-# Project Chimera: Autonomous Influencer Network
+# Project Chimera: Autonomous Influencer Swarm
+> **Agentic Infrastructure for the Next Generation of AI Social Activity**
 
-**Agentic Infrastructure for Building Autonomous AI Influencers**
+![Status Verified](https://img.shields.io/badge/Status-Verified-green.svg)
+![Architecture FastRender](https://img.shields.io/badge/Architecture-FastRender_Swarm-blue.svg)
+![Protocol MCP](https://img.shields.io/badge/Protocol-MCP-orange.svg)
 
-Project Chimera is a sophisticated multi-agent system that creates and manages autonomous digital influencers capable of perception, reasoning, creative expression, and economic agency.
-
-## 🎬 Recent Milestone: Autonomous Intelligence
-Project Chimera has reached a critical milestone: **The Autonomous Perception-Action Loop**.
-The Planner agent can now:
-1. **Perceive**: Fetch real-time tech trends via RSS.
-2. **Reason**: Analyze the news to generate creative content concepts.
-3. **Act**: Generate AI images (Imagen) to match the trend.
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- Python 3.11+
-- Redis (for queue management)
-- Weaviate (for semantic memory)
-- Coinbase Developer Platform account (for agentic commerce)
-
-### Installation
-
-1. **Clone the repository:**
-   ```bash
-   git clone <repository-url>
-   cd chimera
-   ```
-
-2. **Set up environment variables:**
-   ```bash
-   cp .env.example .env
-   # Edit .env with your actual values
-   ```
-
-3. **Install dependencies:**
-   ```bash
-   make setup
-   # or
-   uv pip install -e ".[dev]"
-   ```
-
-4. **Validate your setup:**
-   ```bash
-   python scripts/validate_env.py
-   ```
-
-5. **Run tests:**
-   ```bash
-   make test
-   ```
-
-## 📋 Environment Setup
-
-**See [ENV_SETUP.md](ENV_SETUP.md) for detailed instructions.**
-
-Quick checklist:
-- ✅ Redis running (local or cloud)
-- ✅ Weaviate running (local or cloud)
-- ✅ Coinbase CDP API keys configured
-- ✅ Environment variables set in `.env`
-
-## 🏗️ Architecture
-
-Project Chimera uses the **FastRender Swarm** pattern:
-
-- **Planner**: Decomposes goals into tasks & orchestrates **Perception-Action** loops.
-- **Worker**: Executes tasks using MCP tools (e.g., `generate_image`, `read_feed`).
-- **Judge**: Validates outputs and routes via HITL escalation logic.
-- **Orchestrator**: Manages swarm lifecycle
-
-All external interactions use **Model Context Protocol (MCP)** for standardization.
-
-## 📁 Project Structure
-
-```
-chimera/
-├── specs/              # Source of Truth (SRS)
-│   ├── functional.md   # User stories & workflows
-│   ├── technical.md    # API contracts & schemas
-│   └── _meta.md        # Vision & constraints
-├── research/           # Architecture & strategy docs
-├── skills/             # Agent Skill definitions
-├── chimera/            # Source code
-│   ├── core/           # State, queues, memory, commerce
-│   ├── agents/         # Planner, Worker, Judge
-│   └── mcp/            # MCP clients & servers
-├── tests/              # Test suite (TDD)
-├── personas/           # SOUL.md agent definitions
-├── scripts/            # Utility scripts
-├── Dockerfile          # Containerization
-├── Makefile            # Standardized commands
-└── .env.example        # Environment template
-```
-
-## 🛠️ Development
-
-### Make Commands
-
-```bash
-make setup      # Install dependencies
-make test       # Run test suite
-make lint       # Run linters (ruff, black)
-make build      # Build Docker image
-make spec-check # Verify code alignment with specs
-make shell      # Enter development shell
-```
-
-### Running Tests
-
-```bash
-# Run all tests
-pytest
-
-# Run specific test file
-pytest tests/test_core_agents.py
-
-# Run with coverage
-pytest --cov=chimera
-```
-
-### Starting Services
-
-**Redis:**
-```bash
-# Local
-redis-server
-
-# Docker
-docker run -d -p 6379:6379 redis:7-alpine
-```
-
-**Weaviate:**
-```bash
-# Docker
-docker run -d \
-  --name weaviate \
-  -p 8080:8080 \
-  semitechnologies/weaviate:latest
-```
-
-## 📚 Documentation
-
-- **[walkthrough.md](walkthrough.md)**: Final verification proof & demo results.
-- **[IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md)**: Detailed feature checklist.
-- **[specs/](specs/)**: Master specifications (the source of truth).
-- **[skills/](skills/)**: Agent skill contracts.
-
-## 🔐 Security
-
-- Never commit `.env` to git (already in `.gitignore`)
-- Use secrets management in production
-- Rotate API keys regularly
-- Follow principle of least privilege for API permissions
-
-## 🧪 Testing
-
-Project Chimera follows **Test-Driven Development (TDD)**:
-
-1. Write failing tests first
-2. Implement to pass tests
-3. Refactor
-
-Test coverage includes:
-- Core agent logic (Planner, Worker, Judge)
-- State management (OCC)
-- Persona system
-- MCP integration
-- Trend detection
-
-## 🚢 Deployment
-
-### Docker
-
-```bash
-# Build image
-docker build -t chimera .
-
-# Run container
-docker run --env-file .env chimera
-```
-
-### CI/CD
-
-GitHub Actions workflow runs on every push:
-- Runs test suite
-- Checks code quality
-- Validates spec alignment (via CodeRabbit)
-
-## 🤝 Contributing
-
-1. Read `specs/` before implementing features
-2. Follow TDD approach
-3. Ensure all tests pass
-4. Update documentation
-
-## 📄 License
-
-[Add your license here]
-
-## 🙏 Acknowledgments
-
-- FastRender Swarm pattern inspiration
-- Model Context Protocol (MCP) standard
-- Coinbase AgentKit for agentic commerce
+**Project Chimera** is a sophisticated multi-agent system built for the **10Academy 3-Day Agent Challenge**. It implements a fractal swarm of autonomous agents capable of **Perception, Reasoning, and Action** in the digital economy.
 
 ---
 
-**Status**: 🚀 **Orchestration & Critical Systems Complete**. Verified Autonomous Perception-Action Loop.
+## 🚀 Key Achievement: The Autonomous Loop
+We have successfully implemented and verified the Core Autonomous Loop (`scripts/run_autonomous_loop.py`).
 
-For questions or issues, see `ENV_SETUP.md` or check `IMPLEMENTATION_STATUS.md`.
+The system performs the following sequence **without human intervention**:
+1.  **🧠 Plan:** The `PlannerAgent` analyzes high-level goals.
+2.  **👀 Perceive:** Fetches real-time tech trends via the **MCP News Server** (`news_server.py`).
+3.  **💭 Reason:** Uses LLM (Gemini) to synthesize trends into creative concepts.
+4.  **🎨 Act:** Generates high-fidelity visual assets using the **MCP Image Server**.
+
+---
+
+## 🏗️ Technical Architecture
+
+This project strictly follows **Spec-Driven Development** and the **FastRender Swarm** pattern:
+
+```mermaid
+graph TD
+    User[Human / Goal] -->|Spec Interface| Planner[Planner Agent]
+    Planner -->|Task Decomposition| Queue[Task Queue]
+    Queue -->|Fetch Work| Worker[Worker Agent]
+    
+    subgraph "The Golden Environment"
+        Worker -->|MCP Call| Client[MCP Client]
+        Client -->|Protocol| News[News Server]
+        Client -->|Protocol| Image[Image Server]
+        Client -->|Protocol| Social[Social Server]
+    end
+    
+    Judge[Judge Agent] -->|Validate| Worker
+```
+
+### Core Components
+*   **Source of Truth:** All code is downstream from `specs/` (Functional, Technical).
+*   **Model Context Protocol (MCP):** Standardized interface for all external tools.
+*   **Fractal Orchestration:** Architecture designed to scale from 1 to 100s of agents.
+
+---
+
+## ⚡ Quick Start (For Judges)
+
+### 1. Verification
+To verify the system integrity and independent agency:
+
+```bash
+# 1. Install dependencies
+make setup
+
+# 2. Run the Autonomous Loop (The "Showcase")
+uv run python scripts/run_autonomous_loop.py
+
+# 3. Run the Test Suite (TDD Proof)
+make test
+```
+
+### 2. Project Structure
+The repository is organized for clarity and scalability:
+
+*   `specs/`: **The Constitution.** All functional and technical constraints.
+*   `chimera/agents/`: **The Brains.** Planner, Worker, and Judge implementations.
+*   `chimera/mcp/`: **The Tools.** Independent servers for News, Images, and Social.
+*   `tests/`: **The Proof.** Comprehensive tests for Scalability, Integration, and Logic.
+
+---
+
+## 🙏 Acknowledgments
+
+A huge thank you to the **10Academy Team** for this intense and rewarding challenge.
+
+*   **To the Mentors:** For the invaluable guidance during **Daily Meets** and for pushing us to adopt professional standards like Spec-Driven Development.
+*   **To the Community:** For the real-time support on **Slack** and the shared learning spirit during the intense "Empty Slot" phase.
+*   **To the Reviewers:** Thank you for your time and attention to detail in evaluating this submission.
+
+This project represents not just code, but a leap in understanding **Agentic Architecture**.
+
+---
+
+*Verified Submission - Feb 2026*
