@@ -4,6 +4,13 @@
 
 Project Chimera is a sophisticated multi-agent system that creates and manages autonomous digital influencers capable of perception, reasoning, creative expression, and economic agency.
 
+## 🎬 Recent Milestone: Autonomous Intelligence
+Project Chimera has reached a critical milestone: **The Autonomous Perception-Action Loop**.
+The Planner agent can now:
+1. **Perceive**: Fetch real-time tech trends via RSS.
+2. **Reason**: Analyze the news to generate creative content concepts.
+3. **Act**: Generate AI images (Imagen) to match the trend.
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -58,9 +65,9 @@ Quick checklist:
 
 Project Chimera uses the **FastRender Swarm** pattern:
 
-- **Planner**: Decomposes goals into tasks
-- **Worker**: Executes tasks using MCP tools
-- **Judge**: Validates outputs and routes via HITL
+- **Planner**: Decomposes goals into tasks & orchestrates **Perception-Action** loops.
+- **Worker**: Executes tasks using MCP tools (e.g., `generate_image`, `read_feed`).
+- **Judge**: Validates outputs and routes via HITL escalation logic.
 - **Orchestrator**: Manages swarm lifecycle
 
 All external interactions use **Model Context Protocol (MCP)** for standardization.
@@ -96,6 +103,7 @@ make setup      # Install dependencies
 make test       # Run test suite
 make lint       # Run linters (ruff, black)
 make build      # Build Docker image
+make spec-check # Verify code alignment with specs
 make shell      # Enter development shell
 ```
 
@@ -134,10 +142,10 @@ docker run -d \
 
 ## 📚 Documentation
 
-- **[ENV_SETUP.md](ENV_SETUP.md)**: Environment configuration guide
-- **[IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md)**: Implementation status
-- **[specs/](specs/)**: Complete specifications
-- **[research/](research/)**: Architecture and tooling strategies
+- **[walkthrough.md](walkthrough.md)**: Final verification proof & demo results.
+- **[IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md)**: Detailed feature checklist.
+- **[specs/](specs/)**: Master specifications (the source of truth).
+- **[skills/](skills/)**: Agent skill contracts.
 
 ## 🔐 Security
 
@@ -199,6 +207,6 @@ GitHub Actions workflow runs on every push:
 
 ---
 
-**Status**: ✅ Core Infrastructure Complete - Ready for feature development
+**Status**: 🚀 **Orchestration & Critical Systems Complete**. Verified Autonomous Perception-Action Loop.
 
 For questions or issues, see `ENV_SETUP.md` or check `IMPLEMENTATION_STATUS.md`.
