@@ -4,18 +4,18 @@ Central Orchestrator for the Chimera Network.
 Manages the lifecycle of the agent swarm using the FastRender Pattern.
 This is the "operating system" of the Chimera network.
 """
-from typing import Optional, Dict, Any, List
+from typing import Optional, List
 import asyncio
 import logging
 from datetime import datetime
 
-from chimera.core.state import StateManager, GlobalState
+from chimera.core.state import StateManager
 from chimera.core.queues import QueueManager
 from chimera.agents.planner import PlannerAgent
 from chimera.agents.worker import WorkerAgent
 from chimera.agents.judge import JudgeAgent
 from chimera.agents.cfo_judge import CFOJudge
-from chimera.core.models import Task, TaskResult, TaskType, Verdict
+from chimera.core.models import TaskResult, Verdict
 
 logger = logging.getLogger(__name__)
 

@@ -3,7 +3,7 @@ PostgreSQL Database Models and Schema.
 
 Implements the database schema as specified in specs/technical.md.
 """
-from typing import Optional, List
+from typing import Optional
 from datetime import datetime
 from pydantic import BaseModel, Field
 from enum import Enum
@@ -105,7 +105,6 @@ CREATE INDEX IF NOT EXISTS idx_transactions_tx_hash ON transactions(tx_hash);
 
 # Database Connection Logic
 import os
-import asyncio
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import text

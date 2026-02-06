@@ -1,5 +1,4 @@
-from chimera.core.models import TaskResult, Verdict, TaskStatus
-import uuid
+from chimera.core.models import TaskResult, Verdict
 from pydantic import BaseModel
 
 class JudgeDecision(BaseModel):

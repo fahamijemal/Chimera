@@ -1,10 +1,9 @@
-from typing import Dict, Any, List
+from typing import Dict, Any
 from pydantic import BaseModel, Field
-from chimera.core.models import Task, TaskResult, TaskStatus
+from chimera.core.models import Task, TaskResult
 from chimera.mcp.client import SkillExecutor
 from chimera.core.llm import LLMClient
 import uuid
-import asyncio
 
 class ToolSelection(BaseModel):
     """Structured output for tool selection."""

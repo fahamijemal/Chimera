@@ -1,4 +1,3 @@
-import asyncio
 import sys
 from typing import Dict, Any, Optional
 from mcp import ClientSession, StdioServerParameters
@@ -73,7 +72,7 @@ class SkillExecutor:
             # Note: The MCP SDK ClientSession typically exposes list_tools
             result = await self._session.list_tools()
             return result.tools
-        except Exception as e:
+        except Exception:
             return []
 
     def _validate_tool_call(self, tool_name: str, arguments: Dict[str, Any]):

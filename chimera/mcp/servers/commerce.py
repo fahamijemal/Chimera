@@ -4,10 +4,9 @@ MCP Server for Agentic Commerce.
 
 Exposes financial tools (CommerceManager) to the agent swarm.
 """
-from typing import Any, Dict, List
+from typing import Any, Dict
 from mcp.server.fastmcp import FastMCP
 import logging
-import os
 from chimera.core.commerce import CommerceManager, AGENTKIT_AVAILABLE
 
 # Configure Logging

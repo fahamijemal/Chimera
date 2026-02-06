@@ -4,10 +4,8 @@ Character Consistency Validation for Image Generation.
 Implements FR 3.1: Character Consistency Lock - ensures virtual influencer
 remains recognizable across thousands of posts.
 """
-from typing import Optional, Dict, Any
+from typing import Optional
 import logging
-import base64
-from io import BytesIO
 
 logger = logging.getLogger(__name__)
 

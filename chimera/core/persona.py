@@ -6,7 +6,6 @@ Implements the persona instantiation and management system as specified in FR 1.
 from typing import List, Optional
 from pydantic import BaseModel, Field
 from pathlib import Path
-import yaml
 import frontmatter
 
 

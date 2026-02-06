@@ -1,5 +1,3 @@
-import pytest
-import datetime
 from chimera.core.perception import fetch_trends, SemanticFilter, TrendDetector
 
 

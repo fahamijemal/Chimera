@@ -4,7 +4,7 @@ MCP Server for Social Media Abstraction.
 
 Implements FR 4.0: Platform-Agnostic Publishing using MCP.
 """
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 from mcp.server.fastmcp import FastMCP
 import logging
 from abc import ABC, abstractmethod
